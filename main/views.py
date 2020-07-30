@@ -11,8 +11,7 @@ def index(request):
     context = {
         'register_form' : RegisterForm(),
         'login_form' : LoginForm(),
-        'all_users' : User.objects.all(),
-        'no_user': request.session['user']
+        'all_users' : User.objects.all()
     }
     return render(request, "login.html", context)
 
