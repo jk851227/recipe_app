@@ -1,28 +1,37 @@
 {% extends 'base.html' %} {% block content %}
 <div class="d-flex flex-column align-items-center">
-    <h1>Recipe Information</h1>
-    <a href="/profile/{{user.id}}">Go back to profile</a>
-    <table class="table">
-        <thead>
-            <tr class="d-flex align-items-center">
-                <th class="col-4">Name</th>
-                <th class="col-4">Ingredients</th>
-                <th class="col-4">Instructions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="d-flex align-items-center">
-                <th class="col-4 border-0">{{ food.title }}</th>
-                <td class="col-4 border-0">
-                    <ul class="list-group">
-                        {% for ingredient in all_ingredients %}
-                        <li class="list-group-item border-0">{{ ingredient.name }}</li>
-                        {% endfor %}
-                    </ul>
-                </td>
-                <td class="col-4 border-0">{{ instructions }}</td>
-            </tr>
-        </tbody>
-    </table>
+  <h1>Recipe Information</h1>
+  <table class="table">
+    <thead>
+      <tr class="d-flex align-items-center">
+        <th class="col-3">Name</th>
+        <th class="col-3">Ingredients</th>
+        <th class="col-4">Instructions</th>
+        <th class="col-2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="d-flex align-items-center">
+        <th class="col-3 border-0">{{ food.title }}</th>
+        <td class="col-3 border-0">
+          <ul class="list-group">
+            {% for ingredient in all_ingredients %}
+            <li class="list-group-item border-0">{{ ingredient.name }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td class="col-4 border-0">{{ instructions }}</td>
+        {% if user_saved_meal %}
+        <td class="col-6 border-0">
+          <a href="/remove_meal/{{ user_saved_meal.id }}" class="btn btn-danger">Remove</a>
+        </td>
+        {% else %}
+        <td class="col-2 border-0">
+          <a href="/add_fav/{{ food.title }}/{{ food.id }}" class="btn btn-info">Add to My Fav</a>
+        </td>
+        {% endif %}
+      </tr>
+    </tbody>
+  </table>
 </div>
 {% endblock %}

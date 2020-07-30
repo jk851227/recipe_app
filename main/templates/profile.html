@@ -11,18 +11,18 @@
 <table class="table table-striped">
   <thead>
     <tr class="d-flex align-items-center">
-      <th class="col-6">Meal Name</th>
-      <th class="col-6">Action</th>
+      <th class="col-8">Meal Name</th>
+      <th class="col-4">Action</th>
     </tr>
   </thead>
   <tbody>
     {% for meal in meals %}
     <tr class="d-flex align-items-center">
-      <td class="col-6 border-0">
+      <td class="col-8 border-0">
         <a href="/recipe_info/{{ meal.meal_number }}" class="btn btn-outline-success">{{ meal.name }}</a>
       </td>
-      <td class="col-6 border-0">
-        <a href="/remove_meal/{{ meal.id }}">Remove</a>
+      <td class="col-4 border-0">
+        <a href="/remove_meal/{{ meal.id }}" class="btn btn-danger">Remove</a>
       </td>
     </tr>
     {% endfor %}

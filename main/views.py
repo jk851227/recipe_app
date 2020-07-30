@@ -85,12 +85,18 @@ def recipe_info(request, food_id):
     current_user = User.objects.get(email=request.session['user'])
     all_ingredients = recipe_info['extendedIngredients']
     instructions = recipe_info['instructions']
+    if current_user.saved_meals.filter(meal_number=food_id):
+        user_saved_meal = current_user.saved_meals.get(meal_number=food_id).meal_number
+    else:
+        user_saved_meal = None
+
     context = {
         'food': recipe_info,
         'all_ingredients': all_ingredients,
         'instructions': instructions,
-        'user': User.objects.get(email=request.session['user']),
-        'user': current_user
+        'user': current_user,
+        'user_saved_meal': user_saved_meal,
+
     }
     return render(request, 'recipe_info.html', context)
 
