@@ -7,6 +7,23 @@
     </button>
   </form>
 </div>
+<h1>{{user.f_name}} {{user.l_name}}</h1>
+{% if user.profile.all %}
+        <p>Age: {{user.profile.first.age}}</p>
+        <p>Location: {{user.profile.first.location}}</p>
+        <p>Description: {{user.profile.first.desc}}</p>
+        <p>Cooking Level: {{user.profile.first.cooking_level}}</p>
+    {% endif %}
+    {% if not user.profile.all %}
+        <form action="/create_profile">
+            <button>Create Profile</button>
+        </form> <br>
+    {% endif %}
+    {% if user.profile.all %}
+        <form action="/update_profile">
+            <button>Update Profile</button>
+        </form> <br>
+    {% endif %}
 <h1>My Favorite Meals</h1>
 <table class="table table-striped">
   <thead>

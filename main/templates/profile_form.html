@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+    <h1>Create your Profile!</h1>
+    <form action="/addProfile" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="user" id="user" value="{{user.id}}">
+        <label for="age">Age: </label>
+        <input type="number" name="age" id="age"> <br>
+        <label for="location">Location: </label>
+        <input type="text" name="location" id="location"> <br>
+        <label for="desc">Description: </label> <br>
+        <textarea name="desc" id="desc" cols="30" rows="10"></textarea> <br>
+        <label for="cooking_level">Cooking Level: </label>
+        <select name="cooking_level" id="cooking_level">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="chef">Chef</option>
+        </select> <br>
+        <button>Create</button>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{message}}</p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

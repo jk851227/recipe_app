@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.contrib import messages
-from .models import User, Meal
+from .models import User, Meal, Profile, Friend
 import bcrypt
 from .forms import RegisterForm, LoginForm
 import requests
@@ -53,6 +53,42 @@ def profile(request, id):
         'meals': meals
     }
     return render(request, "profile.html", context)
+
+def profile_form(request):
+    origin = User.objects.get(email=request.session['user'])
+    context = {
+        'user': origin
+    }
+    return render(request, 'profile_form.html', context)
+
+def update_profile(request):
+    origin= User.objects.get(email=request.session['user'])
+    context = {
+        'user': origin,
+        'user_profile': origin.profile.first()
+    }
+    return render(request, 'update_form.html', context)
+
+def addProfile(request):
+    Profile.objects.create(
+        age= request.POST['age'],
+        location= request.POST['location'],
+        desc= request.POST['desc'],
+        cooking_level= request.POST['cooking_level'],
+        user= User.objects.get(id=request.POST['user'])
+    )
+    user= User.objects.get(id=request.POST['user'])
+    return redirect(f"/profile/{user.id}")
+
+def addUpdate(request):
+    user = User.objects.get(id=request.POST['user'])
+    profile_update= user.profile.first()
+    profile_update.age= request.POST['age']
+    profile_update.location= request.POST['location']
+    profile_update.desc= request.POST['desc']
+    profile_update.cooking_level= request.POST['cooking_level']
+    profile_update.save()
+    return redirect(f"/profile/{user.id}")
 
 def search_new_meal(request):
     current_user = User.objects.get(email=request.session['user'])
