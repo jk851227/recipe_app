@@ -1,23 +1,30 @@
 {% extends 'base.html' %} {% block content %}
 <div class="d-flex flex-column align-items-center">
-    <h1>Search Result</h1>
-    <a href="/profile/{{user.id}}">Go back to profile</a>
-    <table class="table table-striped">
-        <thead>
-            <tr class="d-flex align-items-center">
-                <th class="col-6">Name</th>
-                <th class="col-6">Picture</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for food in foods %}
-            <tr class="d-flex align-items-center">
-                <td class="col-6 border-0"><a href="/recipe_info/{{ food.id }}"
-                        class="btn btn-outline-success">{{ food.title }}</a></td>
-                <td class="col-6"><img src="{{ food.image }}" alt="" /></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <h1>Search Result</h1>
+  <a href="/profile/{{user.id}}">Go back to profile</a>
+  <table class="table table-striped">
+    <thead>
+      <tr class="d-flex align-items-center">
+        <th class="col-5">Name</th>
+        <th class="col-5">Picture</th>
+        <th class="col-2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for food in foods %}
+      <tr class="d-flex align-items-center">
+        <td class="col-5 border-0">
+          <a href="/recipe_info/{{ food.id }}" class="btn btn-outline-success"
+            >{{ food.title }}</a
+          >
+        </td>
+        <td class="col-5 border-0"><img src="{{ food.image }}" alt="" /></td>
+        <td class="col-2 border-0">
+          <a href="/add_fav/{{ food.title }}/{{ food.id }}">Add to My Fav</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

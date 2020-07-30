@@ -17,6 +17,7 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 class Meal(models.Model):
     name= models.CharField(max_length=100)
+    meal_number = models.IntegerField()
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at= models.DateTimeField(auto_now=True)
     users_who_saved= models.ManyToManyField(User, related_name="saved_meals")

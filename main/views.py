@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.contrib import messages
-from .models import User
+from .models import User, Meal
 import bcrypt
 from .forms import RegisterForm, LoginForm
 import requests
@@ -47,8 +47,10 @@ def profile(request, id):
     if this_user.email != request.session['user']:
         messages.error(request, "User authentication required")
         return redirect("/")
+    meals = this_user.saved_meals.all()
     context = {
         'this_user' : this_user,
+        'meals': meals
     }
     return render(request, "profile.html", context)
 
@@ -69,9 +71,11 @@ def search_meals(request):
 def food_list(request):
     current_user = User.objects.get(email=request.session['user'])
     foods = request.session['foods']
+    meals = current_user.saved_meals.all()
     context = {
         'foods': foods,
-        'user': current_user
+        'user': current_user,
+        'meals': meals
     }
     return render(request, 'food_list.html', context)
 
@@ -104,6 +108,19 @@ def random_meal(request):
         'food': food
     }
     return render(request, 'random_meal.html', context)
+
+def add_fav(request, food_name, food_id):
+    current_user = User.objects.get(email=request.session['user'])
+    new_meal = Meal.objects.create(name=food_name, meal_number=food_id)
+    new_meal.users_who_saved.add(current_user)
+    return redirect(f'/profile/{current_user.id}')
+
+def remove_meal(request, food_id):
+    current_user = User.objects.get(email=request.session['user'])
+    current_meal = Meal.objects.get(id=food_id)
+    current_user.saved_meals.remove(current_meal)
+    current_user.save()
+    return redirect(f'/profile/{current_user.id}')
 
 def logout(request):
     request.session.flush()
