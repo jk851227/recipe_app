@@ -10,5 +10,7 @@ urlpatterns = [
     path('logout', views.logout),
     path('search_food', views.search_meals),
     path('food_list', views.food_list),
-    path('recipe_info/<int:food_id>', views.recipe_info)
+    path('recipe_info/<int:food_id>', views.recipe_info),
+    path('search_random', views.search_random),
+    path('random_meal', views.random_meal)
 ]

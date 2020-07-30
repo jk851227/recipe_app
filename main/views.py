@@ -90,6 +90,21 @@ def recipe_info(request, food_id):
     }
     return render(request, 'recipe_info.html', context)
 
+def search_random(request):
+    url = 'https://api.spoonacular.com/recipes/random?apiKey=ba2645667f5b40a3a7d42da11db66def&number=1'
+    random_meal = requests.get(url).json()
+    request.session['food'] = random_meal['recipes'][0]
+    return redirect('/random_meal')
+
+def random_meal(request):
+    current_user = User.objects.get(email=request.session['user'])
+    food = request.session['food']
+    context = {
+        'user': current_user,
+        'food': food
+    }
+    return render(request, 'random_meal.html', context)
+
 def logout(request):
     request.session.flush()
     return redirect("/")

@@ -1,13 +1,29 @@
 {% extends 'base.html' %} {% block content %}
 <div class="d-flex flex-column align-items-center">
-    <h1>Search for Recipe</h1>
-    <a href="/profile/{{user.id}}">Go back to profile</a>
-    <form action="/search_food" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <textarea class="form-control" name="ingredients" id="ingredients" cols="100" rows="10"></textarea><br />
-            <button type="submit" class="btn btn-info btn-block">Search</button>
-        </div>
-    </form>
+  <h1>Search for Recipe</h1>
+  <a href="/profile/{{user.id}}">Go back to profile</a>
+  <form action="/search_food" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <textarea
+        class="form-control"
+        name="ingredients"
+        id="ingredients"
+        cols="100"
+        rows="10"
+      ></textarea
+      ><br />
+      <button type="submit" class="btn btn-info btn-block">Search</button>
+    </div>
+  </form>
+  <h5>or...</h5>
+  <form action="/search_random" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <button type="submit" class="btn btn-info btn-block">
+        Search Random Meal
+      </button>
+    </div>
+  </form>
 </div>
 {% endblock %}
