@@ -14,6 +14,7 @@ def index(request):
         'all_users' : User.objects.all(),
     }
     return render(request, "login.html", context)
+
 def validate_login(request):
     this_user_email = request.POST['email']
     request.session['user'] = this_user_email
@@ -63,8 +64,6 @@ def search_meals(request):
     ingredients = request.POST['ingredients']
     foods = requests.get(url.format(ingredients)).json()
     request.session['foods'] = foods
-    current_user = User.objects.get(email=request.session['user'])
-
     return redirect('/food_list')
 
 def food_list(request):
@@ -74,17 +73,14 @@ def food_list(request):
         'foods': foods,
         'user': current_user
     }
-
     return render(request, 'food_list.html', context)
 
 def recipe_info(request, food_id):
     url = 'https://api.spoonacular.com/recipes/{}/information?apiKey=ba2645667f5b40a3a7d42da11db66def&includeNutrition=false'
     recipe_info = requests.get(url.format(food_id)).json()
     current_user = User.objects.get(email=request.session['user'])
-
     all_ingredients = recipe_info['extendedIngredients']
     instructions = recipe_info['instructions']
-
     context = {
         'food': recipe_info,
         'all_ingredients': all_ingredients,
@@ -92,10 +88,8 @@ def recipe_info(request, food_id):
         'user': User.objects.get(email=request.session['user']),
         'user': current_user
     }
-
     return render(request, 'recipe_info.html', context)
 
 def logout(request):
     request.session.flush()
     return redirect("/")
-# Create your views here.
