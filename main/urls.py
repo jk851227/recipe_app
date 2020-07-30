@@ -8,6 +8,7 @@ urlpatterns = [
     path('profile/<int:id>', views.profile),
     path('search_new_meal', views.search_new_meal),
     path('logout', views.logout),
-    path('search_food', views.food_list),
+    path('search_food', views.search_meals),
+    path('food_list', views.food_list),
     path('recipe_info/<int:food_id>', views.recipe_info)
 ]

@@ -6,15 +6,6 @@ import bcrypt
 from .forms import RegisterForm, LoginForm
 import requests
 
-# def base(request):
-#     current_user = User.objects.get(email=request.session['user'])
-
-#     context = {
-#         'user': current_user
-#     }
-
-#     return render(request, 'base.html')
-
 def index(request):
     request.session['user'] = ""
     context = {
@@ -67,13 +58,21 @@ def search_new_meal(request):
     }
     return render(request, "index.html", context)
 
-def food_list(request):
+def search_meals(request):
     url = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=ba2645667f5b40a3a7d42da11db66def&ingredients={}'
     ingredients = request.POST['ingredients']
     foods = requests.get(url.format(ingredients)).json()
+    request.session['foods'] = foods
+    current_user = User.objects.get(email=request.session['user'])
 
+    return redirect('/food_list')
+
+def food_list(request):
+    current_user = User.objects.get(email=request.session['user'])
+    foods = request.session['foods']
     context = {
-        'foods': foods
+        'foods': foods,
+        'user': current_user
     }
 
     return render(request, 'food_list.html', context)
@@ -81,6 +80,7 @@ def food_list(request):
 def recipe_info(request, food_id):
     url = 'https://api.spoonacular.com/recipes/{}/information?apiKey=ba2645667f5b40a3a7d42da11db66def&includeNutrition=false'
     recipe_info = requests.get(url.format(food_id)).json()
+    current_user = User.objects.get(email=request.session['user'])
 
     all_ingredients = recipe_info['extendedIngredients']
     instructions = recipe_info['instructions']
@@ -89,7 +89,8 @@ def recipe_info(request, food_id):
         'food': recipe_info,
         'all_ingredients': all_ingredients,
         'instructions': instructions,
-        'user': User.objects.get(email=request.session['user'])
+        'user': User.objects.get(email=request.session['user']),
+        'user': current_user
     }
 
     return render(request, 'recipe_info.html', context)
