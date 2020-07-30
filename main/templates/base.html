@@ -16,12 +16,15 @@
       <a class="navbar-brand" href="#">Recipe App</a>
       <div class="ml-auto justify-content-end" id="navbarNav">
         <ul class="navbar-nav d-flex">
-          <li class="nav-item">
-            <a class="nav-link" href="/profile/{{user.id}}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Log Out</a>
-          </li>
+          {% if user.id == none %}
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/profile/{{user.id}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Log Out</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </nav>

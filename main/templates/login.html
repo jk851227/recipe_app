@@ -1,39 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe App: Register and Login</title>
-</head>
-<body>
-    <h1>Welcome</h1>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <div class="col-s-1-12" id="register">
-        <h2>Register</h2>
-        <form action="/register" method="POST">
-            {% csrf_token %}
-            {% for field in register_form  %}
-            <p> {{ field.label_tag }} {{ field }} </p> 
-            {% endfor %}
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+{% extends 'base.html' %} {% block content %}
+<div class="d-flex flex-column align-items-center">
+  <h1>Welcome</h1>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+      {{ message }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <div
+    class="form-group col-s-1-12 d-flex flex-column align-items-center"
+    id="register"
+  >
+    <h2>Register</h2>
+    <form action="/register" method="POST">
+      {% csrf_token %} {% for field in register_form %}
+      <div class="col-sm-12 d-flex justify-content-between">
+        <p>{{ field.label_tag }}</p>
+        <p>{{ field }}</p>
+      </div><br>
+      {% endfor %}
+      <button type="submit" class="btn btn-info btn-block">
+        Register
+      </button>
+    </form>
+  </div>
 
-    <div class="col-s-1-12" id="login">
-        <h2>Login</h2>
-        <form action="/login" method="POST">
-            {% csrf_token %}
-            {% for field in login_form  %}
-            <p> {{ field.label_tag }} {{ field }} </p> 
-            {% endfor %}
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-</body>
-</html>
+  <div
+    class="form-group col-s-1-12 d-flex flex-column align-items-center"
+    id="login"
+  ><br>
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+      {% csrf_token %} {% for field in login_form %}
+      <div class="col-sm-12 d-flex justify-content-between">
+        <p>{{ field.label_tag }}</p>
+        <p>{{ field }}</p>
+      </div><br>
+      {% endfor %}
+      <button type="submit" class="btn btn-info btn-block">
+        Login
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

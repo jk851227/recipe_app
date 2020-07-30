@@ -12,6 +12,7 @@ def index(request):
         'register_form' : RegisterForm(),
         'login_form' : LoginForm(),
         'all_users' : User.objects.all(),
+        'no_user': request.session['user']
     }
     return render(request, "login.html", context)
 
@@ -49,7 +50,7 @@ def profile(request, id):
         return redirect("/")
     meals = this_user.saved_meals.all()
     context = {
-        'this_user' : this_user,
+        'user' : this_user,
         'meals': meals
     }
     return render(request, "profile.html", context)
