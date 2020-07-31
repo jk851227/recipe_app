@@ -1,25 +1,48 @@
 {% extends 'base.html' %} {% block content %}
-    <h1>Create your Profile!</h1>
-    <form action="/addProfile" method='POST'>
-        {% csrf_token %}
-        <input type="hidden" name="user" id="user" value="{{user.id}}">
-        <label for="age">Age: </label>
-        <input type="number" name="age" id="age"> <br>
-        <label for="location">Location: </label>
-        <input type="text" name="location" id="location"> <br>
-        <label for="desc">Description: </label> <br>
-        <textarea name="desc" id="desc" cols="30" rows="10"></textarea> <br>
-        <label for="cooking_level">Cooking Level: </label>
-        <select name="cooking_level" id="cooking_level">
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="chef">Chef</option>
-        </select> <br>
-        <button>Create</button>
-    </form>
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{message}}</p>
-        {% endfor %}
-    {% endif %}
+<div class="d-flex flex-column align-items-center">
+  <h1>Create your Profile!</h1>
+  <form action="/addProfile" method="POST">
+    {% csrf_token %}
+    <div class="form-group row">
+      <input type="hidden" name="user" id="user" value="{{user.id}}" />
+      <label for="age" class="col-sm-2 col-form-label">Age: </label>
+      <div class="col-sm-10">
+        <input type="number" name="age" id="age" class="form-control" />
+      </div>
+      <br />
+      <label for="location" class="col-sm-2 col-form-label">Location: </label>
+      <div class="col-sm-10">
+        <input type="text" name="location" id="location" class="form-control" />
+      </div>
+      <br />
+      <label for="desc" class="col-sm-2 col-form-label">Description: </label>
+      <br />
+      <div class="col-sm-10">
+        <textarea
+          name="desc"
+          id="desc"
+          cols="30"
+          rows="10"
+          class="form-control"
+        ></textarea>
+      </div>
+      <br />
+      <label for="cooking_level" class="col-sm-2 col-form-label"
+        >Cooking Level:
+      </label>
+      <div class="col-sm-10">
+        <select name="cooking_level" id="cooking_level" class="form-control">
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="chef">Chef</option>
+        </select>
+      </div>
+      <br />
+    </div>
+    <button class="btn btn-info btn-block">Create</button>
+  </form>
+  {% if messages %} {% for message in messages %}
+  <p>{{message}}</p>
+  {% endfor %} {% endif %}
+</div>
 {% endblock %}

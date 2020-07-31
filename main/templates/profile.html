@@ -7,23 +7,25 @@
     </button>
   </form>
 </div>
-<h1>{{user.f_name}} {{user.l_name}}</h1>
-{% if user.profile.all %}
-        <p>Age: {{user.profile.first.age}}</p>
-        <p>Location: {{user.profile.first.location}}</p>
-        <p>Description: {{user.profile.first.desc}}</p>
-        <p>Cooking Level: {{user.profile.first.cooking_level}}</p>
-    {% endif %}
-    {% if not user.profile.all %}
-        <form action="/create_profile">
-            <button>Create Profile</button>
-        </form> <br>
-    {% endif %}
-    {% if user.profile.all %}
-        <form action="/update_profile">
-            <button>Update Profile</button>
-        </form> <br>
-    {% endif %}
+<div class="jumbotron d-flex justify-content-around align-items-center">
+  <h1 class="display-4">{{user.f_name}} {{user.l_name}}</h1>
+  {% if user.profile.all %}
+  <div class="d-flex flex-column align-items-center">
+    <p>Age: {{user.profile.first.age}}</p>
+    <p>Location: {{user.profile.first.location}}</p>
+    <p>Description: {{user.profile.first.desc}}</p>
+    <p>Cooking Level: {{user.profile.first.cooking_level}}</p>
+    <form action="/update_profile">
+      <button class="btn btn-info">Update Profile</button>
+    </form>
+  </div>
+  {% endif %} {% if not user.profile.all %}
+  <form action="/create_profile">
+    <button class="btn btn-info">Create Profile</button>
+  </form>
+  <br />
+  {% endif %}
+</div>
 <h1>My Favorite Meals</h1>
 <table class="table table-striped">
   <thead>
@@ -36,7 +38,11 @@
     {% for meal in meals %}
     <tr class="d-flex align-items-center">
       <td class="col-8 border-0">
-        <a href="/recipe_info/{{ meal.meal_number }}" class="btn btn-outline-success">{{ meal.name }}</a>
+        <a
+          href="/recipe_info/{{ meal.meal_number }}"
+          class="btn btn-outline-success"
+          >{{ meal.name }}</a
+        >
       </td>
       <td class="col-4 border-0">
         <a href="/remove_meal/{{ meal.id }}" class="btn btn-danger">Remove</a>
