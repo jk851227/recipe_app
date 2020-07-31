@@ -14,20 +14,22 @@
       <tr class="d-flex align-items-center">
         <th class="col-3 border-0">{{ food.title }}</th>
         <td class="col-3 border-0">
-          <ul class="list-group">
-            {% for ingredient in all_ingredients %}
-            <li class="list-group-item border-0">{{ ingredient.name }}</li>
-            {% endfor %}
-          </ul>
+          {% for ingredient in all_ingredients %}
+          <span class="list-group-item border-0">{{ ingredient.name }}</span>
+          {% endfor %}
         </td>
         <td class="col-4 border-0">{{ instructions }}</td>
         {% if user_saved_meal %}
         <td class="col-6 border-0">
-          <a href="/remove_meal/{{ user_saved_meal.id }}" class="btn btn-danger">Remove</a>
+          <a href="/remove_meal/{{ user_saved_meal.id }}" class="btn btn-danger"
+            >Remove</a
+          >
         </td>
         {% else %}
         <td class="col-2 border-0">
-          <a href="/add_fav/{{ food.title }}/{{ food.id }}" class="btn btn-info">Add to My Fav</a>
+          <a href="/add_fav/{{ food.title }}/{{ food.id }}" class="btn btn-info"
+            >Add to My Fav</a
+          >
         </td>
         {% endif %}
       </tr>
